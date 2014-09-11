@@ -8,11 +8,13 @@
 
 namespace FT\Formulario\Types;
 
-use FT\Formulario\FieldBasic;
 use FT\Formulario\iField;
 
-class Select  extends FieldBasic implements iField
+class Select implements iField
 {
+    private $name;
+    private $id;
+    private $value;
     private $legend;
     private $placeholder;
     private $multiple = "";
@@ -21,8 +23,8 @@ class Select  extends FieldBasic implements iField
 
     function __construct($id, $name, $legend, $placeholder = '')
     {
-        parent::setId($id);
-        parent::setName($name);
+        $this->id = $id;
+        $this->name = $name;
         $this->legend = $legend;
         $this->placeholder = $placeholder;
     }
@@ -30,11 +32,11 @@ class Select  extends FieldBasic implements iField
     public function render()
     {
         echo "<div class='control-group''>\n";
-        echo "<label class='control-label' for='".parent::getId()."'>".$this->legend."</label>\n";
+        echo "<label class='control-label' for='".$this->id."'>".$this->legend."</label>\n";
         echo "<div class='controls'>\n";
-        echo "<select id='".parent::getId()."' name='".parent::getName()."' value='".parent::getValue()."' placeholder='".$this->placeholder."' size='".$this->size."' ".$this->multiple.">\n";
+        echo "<select id='".$this->id."' name='".$this->name."' value='".$this->value."' placeholder='".$this->placeholder."' size='".$this->size."' ".$this->multiple.">\n";
         //echo "<option value=''></option>";
-        echo "<option value='' disabled selected style='display:none; color: #c43c35'></option>";
+        echo "<option value='' disabled selected style='display:none; color: #8fff9c'></option>";
         array_walk($this->options, function(Option $option)
         {
             $option->render();
@@ -56,65 +58,81 @@ class Select  extends FieldBasic implements iField
         $this->options = null;
     }
 
-    /**
-     * @param mixed $legend
-     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setOptions($options)
+    {
+        $this->options = $options;
+    }
+
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
     public function setLegend($legend)
     {
         $this->legend = $legend;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLegend()
     {
         return $this->legend;
     }
 
-    /**
-     * @param mixed $multiple
-     */
     public function setMultiple($multiple)
     {
         $this->multiple = $multiple;
     }
 
-    /**
-     * @return mixed
-     */
     public function getMultiple()
     {
         return $this->multiple;
     }
 
-    /**
-     * @param mixed $placeholder
-     */
     public function setPlaceholder($placeholder)
     {
         $this->placeholder = $placeholder;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPlaceholder()
     {
         return $this->placeholder;
     }
 
-    /**
-     * @param mixed $size
-     */
     public function setSize($size)
     {
         $this->size = $size;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSize()
     {
         return $this->size;

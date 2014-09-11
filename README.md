@@ -1,9 +1,9 @@
 Code Education
 ----
 - Módulo: Design Patterns
-- Projeto Fase: I
+- Projeto Fase: II
 - Autor: Fábio Tavares
-- Data: 28/08/2014
+- Data: 11/09/2014
 
 Observações
 ----

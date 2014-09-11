@@ -8,20 +8,22 @@
 
 namespace FT\Formulario\Types;
 
-use FT\Formulario\FieldBasic;
 use FT\Formulario\iField;
 
-class InputMark extends FieldBasic implements iField
+class InputMark implements iField
 {
+    private $name;
+    private $id;
+    private $value;
     private $type; //radio ou checkbox
     private $legend;
     private $checked;
 
     function __construct($type, $id, $name, $value, $legend, $checked = "")
     {
-        parent::setId($id);
-        parent::setName($name);
-        parent::setValue($value);
+        $this->id = $id;
+        $this->name = $name;
+        $this->value = $value;
         $this->type = $type;
         $this->legend = $legend;
         $this->checked = $checked;
@@ -32,56 +34,78 @@ class InputMark extends FieldBasic implements iField
         echo "<div class='control-group''>\n";
         echo "<div class='controls'>\n";
         echo "<label class='".$this->type."'>\n";
-        echo "<input type='".$this->type."' id='".parent::getId()."' name='".parent::getName()."' value='".parent::getValue()."' ".$this->checked.">\n";
+        echo "<input type='".$this->type."' id='".$this->id."' name='".$this->name."' value='".$this->value."' ".$this->checked.">\n";
         echo $this->legend."\n";
         echo "</label>\n";
         echo "</div>\n";
         echo "</div>\n";
     }
 
-    /**
-     * @param mixed $type
-     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setLegend($legend)
+    {
+        $this->legend = $legend;
+    }
+
+    public function getLegend()
+    {
+        return $this->legend;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
     public function setType($type)
     {
         $this->type = $type;
     }
 
-    /**
-     * @return mixed
-     */
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * @param boolean $checked
-     */
     public function setChecked($checked)
     {
         $this->checked = $checked;
     }
 
-    /**
-     * @return boolean
-     */
     public function getChecked()
     {
         return $this->checked;
     }
 
-    /**
-     * @param mixed $legend
-     */
     public function setStr($legend)
     {
         $this->legend = $legend;
     }
 
-    /**
-     * @return mixed
-     */
     public function getStr()
     {
         return $this->legend;
