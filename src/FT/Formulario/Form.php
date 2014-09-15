@@ -17,10 +17,9 @@ class Form implements iField
     private $action;
     private $method;
     private $class;
-    private $legend;
     private $fields  = []; //array de iField
 
-    function __construct(Validator $validator, $id, $name, $action, $method, $class, $legend)
+    function __construct(Validator $validator, $id, $name, $action, $method, $class)
     {
         $this->validator = $validator;
         $this->id = $id;
@@ -28,7 +27,6 @@ class Form implements iField
         $this->action = $action;
         $this->method = $method;
         $this->class = $class;
-        $this->legend = $legend;
     }
 
 
@@ -45,8 +43,6 @@ class Form implements iField
     public function render()
     {
         echo "<form id='".$this->id."' name='".$this->name."' action='".$this->action."' method='".$this->method."' class='".$this->class."'>\n";
-        echo "<fieldset>\n";
-        echo "<legend>".$this->legend."</legend>\n";
 
         array_walk($this->fields,
             function(iField $field)
@@ -55,7 +51,6 @@ class Form implements iField
             }
         );
 
-        echo " </fieldset>\n";
         echo "</form>\n";
     }
 
@@ -87,16 +82,6 @@ class Form implements iField
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setLegend($legend)
-    {
-        $this->legend = $legend;
-    }
-
-    public function getLegend()
-    {
-        return $this->legend;
     }
 
     public function setMethod($method)

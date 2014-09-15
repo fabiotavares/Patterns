@@ -15,32 +15,50 @@ use \FT\Formulario\Types\Option;
 use \FT\Formulario\Types\TextArea;
 use \FT\Formulario\Request;
 use \FT\Formulario\Validator;
+use FT\Formulario\Types\FieldSet;
 
 define('CLASS_DIR', '../src/');
 set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR);
 spl_autoload_register();
 
+//FIELDSET: campos pessoais
+$fieldPessoal = new FieldSet("pessoal", "Pessoal");
+$fieldPessoal->add(new InputText("text", "iNome", "nome", "Nome:"));
+$fieldPessoal->add(new InputText("text", "iEndereco", "endereco", "Endereço:"));
+$fieldPessoal->add(new InputMark("radio", "iSexo1", "sexo", "", "Masculino"));
+$fieldPessoal->add(new InputMark("radio", "iSexo2", "sexo", "", "Feminino"));
+
+//FIELDSET: campos de endereço
+$fieldEndereco = new FieldSet("endereco", "Endereço");
+$select = new Select("iEstado", "estado", "Estado:", "Seu estado");
+$select->add(new Option("mg", "Minas Gerais"));
+$select->add(new Option("es", "Espírito Santo"));
+$select->add(new Option("rj", "Rio de Janeiro"));
+$select->add(new Option("sp", "São Paulo"));
+$select->add(new Option("pr", "Paraná"));
+$fieldEndereco->add($select);
+$fieldEndereco->add(new InputText("email", "iEmail", "email", "Email:", "Digite seu email"));
+
+//FIELDSET: campos de acesso
+$fieldAcesso = new FieldSet("acesso", "Acesso");
+$fieldAcesso->add(new InputText("password", "iSenha", "senha", "Senha:", "Digite sua senha"));
+
+//FIELDSET: campos outros
+$fieldOutros = new FieldSet("outros", "Outros");
+$fieldOutros->add(new TextArea("iObs", "obs", "Observações:", 6, 50));
+$fieldOutros->add(new InputMark("checkbox", "iNews", "news", "", "Receber novidades por email"));
+
+//FORMULÁRIO
 $request = new Request();
 $validator = new Validator($request);
-$form = new Form($validator, 'iForm', 'form', '#', 'post', 'form-horizontal', 'Cadastro');
+$form = new Form($validator, 'iForm', 'form', '#', 'post', 'form-horizontal');
 
-$form->createField(new InputText("text", "iNome", "nome", "Nome:"));
-$form->createField(new InputText("text", "iEndereco", "endereco", "Endereço:"));
-$form->createField(new InputMark("radio", "iSexo1", "sexo", "", "Masculino"));
-$form->createField(new InputMark("radio", "iSexo2", "sexo", "", "Feminino"));
-
-$select = new Select("iEstado", "estado", "Estado:", "Seu estado");
-$select->addOption(new Option("mg", "Minas Gerais"));
-$select->addOption(new Option("es", "Espírito Santo"));
-$select->addOption(new Option("rj", "Rio de Janeiro"));
-$select->addOption(new Option("sp", "São Paulo"));
-$select->addOption(new Option("pr", "Paraná"));
-$form->createField($select);
-
-$form->createField(new InputText("email", "iEmail", "email", "Email:", "Digite seu email"));
-$form->createField(new InputText("password", "iSenha", "senha", "Senha:", "Digite sua senha"));
-$form->createField(new TextArea("iObs", "obs", "Observações:", 6, 50));
-$form->createField(new InputMark("checkbox", "iNews", "news", "", "Receber novidades por email"));
+//adicionando os fieldsets
+$form->createField($fieldPessoal);
+$form->createField($fieldEndereco);
+$form->createField($fieldAcesso);
+$form->createField($fieldOutros);
+//adicionando o botão submit
 $form->createField(new Button("submit", "iSub", "sub", "Enviar", "btn btn-primary"));
 
 ?>
@@ -63,7 +81,7 @@ $form->createField(new Button("submit", "iSub", "sub", "Enviar", "btn btn-primar
     <body>
         <div class="hero-unit">
             <h2>PHP: Design Patterns</h2>
-            <h2><small>Projeto Fase 2 - Fábio Tavares</small></h2>
+            <h2><small>Projeto Fase 3 - Fábio Tavares</small></h2>
         </div>
 
 <?php $form->render(); ?>

@@ -9,8 +9,9 @@
 namespace FT\Formulario\Types;
 
 use FT\Formulario\iField;
+use FT\Formulario\FieldContainer;
 
-class Select implements iField
+class Select extends FieldContainer
 {
     private $name;
     private $id;
@@ -19,7 +20,6 @@ class Select implements iField
     private $placeholder;
     private $multiple = "";
     private $size = 1;
-    private $options = []; //array de Option
 
     function __construct($id, $name, $legend, $placeholder = '')
     {
@@ -37,25 +37,15 @@ class Select implements iField
         echo "<select id='".$this->id."' name='".$this->name."' value='".$this->value."' placeholder='".$this->placeholder."' size='".$this->size."' ".$this->multiple.">\n";
         //echo "<option value=''></option>";
         echo "<option value='' disabled selected style='display:none; color: #8fff9c'></option>";
-        array_walk($this->options, function(Option $option)
+        array_walk($this->fields, function(iField $field)
         {
-            $option->render();
+            $field->render();
             echo "\n";
         });
 
         echo "</select>\n";
         echo "</div>\n";
         echo "</div>\n";
-    }
-
-    public function addOption(Option $option)
-    {
-        array_push($this->options, $option);
-    }
-
-    public function resetOption()
-    {
-        $this->options = null;
     }
 
     public function setId($id)
@@ -76,16 +66,6 @@ class Select implements iField
     public function getName()
     {
         return $this->name;
-    }
-
-    public function setOptions($options)
-    {
-        $this->options = $options;
-    }
-
-    public function getOptions()
-    {
-        return $this->options;
     }
 
     public function setValue($value)

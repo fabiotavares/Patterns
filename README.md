@@ -1,12 +1,13 @@
 Code Education
 ----
 - Módulo: Design Patterns
-- Projeto Fase: II
+- Projeto Fase: III
 - Autor: Fábio Tavares
-- Data: 11/09/2014
+- Data: 15/09/2014
 
 Observações
 ----
-- Uso de interface na flexibilização
+- Adicionado funcionalidade de fieldset
+- Uso do Patern Composite para os campos FieldSet e Select
 - Uso de bootstrap para geração de estilos
 - Ao executar index.php um formulário de exemplo é gerado e exibido
