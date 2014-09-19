@@ -8,8 +8,7 @@
 
 namespace FT\Formulario;
 
-
-class Validator
+abstract class Validator
 {
     protected $request;
 
@@ -18,9 +17,16 @@ class Validator
         $this->request = $request;
     }
 
+    abstract public function validate($fields);
+
     public function getRequest()
     {
         return $this->request;
+    }
+
+    public function setRequest($request)
+    {
+        $this->request = $request;
     }
 
 } 

@@ -11,5 +11,21 @@ namespace FT\Formulario;
 
 class Request
 {
+    protected $dados = [];
+
+    function __construct($dados)
+    {
+        $this->dados = $dados;
+    }
+
+    public function setDados($dados)
+    {
+        $this->dados = $dados;
+    }
+
+    public function getDados()
+    {
+        return $this->dados;
+    }
 
 } 

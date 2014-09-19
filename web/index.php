@@ -6,60 +6,17 @@
  * Time: 19:12
  */
 
-use \FT\Formulario\Form;
-use \FT\Formulario\Types\Button;
-use \FT\Formulario\Types\InputMark;
-use \FT\Formulario\Types\InputText;
-use \FT\Formulario\Types\Select;
-use \FT\Formulario\Types\Option;
-use \FT\Formulario\Types\TextArea;
+require_once('../src/FT/Util/conexao.php');
+
 use \FT\Formulario\Request;
-use \FT\Formulario\Validator;
-use FT\Formulario\Types\FieldSet;
+use \FT\Formulario\FormProdutos;
 
 define('CLASS_DIR', '../src/');
 set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR);
 spl_autoload_register();
 
-//FIELDSET: campos pessoais
-$fieldPessoal = new FieldSet("pessoal", "Pessoal");
-$fieldPessoal->add(new InputText("text", "iNome", "nome", "Nome:"));
-$fieldPessoal->add(new InputText("text", "iEndereco", "endereco", "Endereço:"));
-$fieldPessoal->add(new InputMark("radio", "iSexo1", "sexo", "", "Masculino"));
-$fieldPessoal->add(new InputMark("radio", "iSexo2", "sexo", "", "Feminino"));
-
-//FIELDSET: campos de endereço
-$fieldEndereco = new FieldSet("endereco", "Endereço");
-$select = new Select("iEstado", "estado", "Estado:", "Seu estado");
-$select->add(new Option("mg", "Minas Gerais"));
-$select->add(new Option("es", "Espírito Santo"));
-$select->add(new Option("rj", "Rio de Janeiro"));
-$select->add(new Option("sp", "São Paulo"));
-$select->add(new Option("pr", "Paraná"));
-$fieldEndereco->add($select);
-$fieldEndereco->add(new InputText("email", "iEmail", "email", "Email:", "Digite seu email"));
-
-//FIELDSET: campos de acesso
-$fieldAcesso = new FieldSet("acesso", "Acesso");
-$fieldAcesso->add(new InputText("password", "iSenha", "senha", "Senha:", "Digite sua senha"));
-
-//FIELDSET: campos outros
-$fieldOutros = new FieldSet("outros", "Outros");
-$fieldOutros->add(new TextArea("iObs", "obs", "Observações:", 6, 50));
-$fieldOutros->add(new InputMark("checkbox", "iNews", "news", "", "Receber novidades por email"));
-
-//FORMULÁRIO
-$request = new Request();
-$validator = new Validator($request);
-$form = new Form($validator, 'iForm', 'form', '#', 'post', 'form-horizontal');
-
-//adicionando os fieldsets
-$form->createField($fieldPessoal);
-$form->createField($fieldEndereco);
-$form->createField($fieldAcesso);
-$form->createField($fieldOutros);
-//adicionando o botão submit
-$form->createField(new Button("submit", "iSub", "sub", "Enviar", "btn btn-primary"));
+//criando um formulário de cadastro de produtos (passando a requisição)
+$formProdutos = new FormProdutos($conn, new Request($_REQUEST),'iForm', 'form', 'index.php', 'post', 'form-horizontal');
 
 ?>
 
@@ -81,10 +38,28 @@ $form->createField(new Button("submit", "iSub", "sub", "Enviar", "btn btn-primar
     <body>
         <div class="hero-unit">
             <h2>PHP: Design Patterns</h2>
-            <h2><small>Projeto Fase 3 - Fábio Tavares</small></h2>
+            <h2><small>Projeto Fase 4 - Fábio Tavares</small></h2>
         </div>
 
-<?php $form->render(); ?>
+<?php
+//exibir o formulário se o mesmo não for validado (mostrando as mensagens de erro se existirem)
+if(!$formProdutos->validaFormulario()):
+    $formProdutos->render();
+else:
+//exibir mensagem de sucesso no cadastro do produto
+?>
+
+    <div class="alert alert-success">
+        <h4>Parabéns!</h4>
+        Produto cadastrado com sucesso.
+    </div>
+    <p>
+        <a href="index.php"><button class="btn btn-success" type="button">Voltar</button></a>
+    </p>
+
+<?php
+endif;
+?>
 
         <script type="text/javascript" src="js/bootstrap.js"></script>
     </body>

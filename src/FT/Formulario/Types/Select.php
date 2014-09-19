@@ -17,16 +17,15 @@ class Select extends FieldContainer
     private $id;
     private $value;
     private $legend;
-    private $placeholder;
     private $multiple = "";
     private $size = 1;
+    protected $msgError;
 
-    function __construct($id, $name, $legend, $placeholder = '')
+    function __construct($id, $name, $legend)
     {
         $this->id = $id;
         $this->name = $name;
         $this->legend = $legend;
-        $this->placeholder = $placeholder;
     }
 
     public function render()
@@ -34,18 +33,44 @@ class Select extends FieldContainer
         echo "<div class='control-group''>\n";
         echo "<label class='control-label' for='".$this->id."'>".$this->legend."</label>\n";
         echo "<div class='controls'>\n";
-        echo "<select id='".$this->id."' name='".$this->name."' value='".$this->value."' placeholder='".$this->placeholder."' size='".$this->size."' ".$this->multiple.">\n";
+        echo "<select id='".$this->id."' name='".$this->name."' value='".$this->value."' size='".$this->size."' ".$this->multiple.">\n";
         //echo "<option value=''></option>";
         echo "<option value='' disabled selected style='display:none; color: #8fff9c'></option>";
+
         array_walk($this->fields, function(iField $field)
         {
+            if($this->value == $field->getValue()) {
+                $field->setSelected("selected");
+            } else {
+                $field->setSelected("");
+            }
             $field->render();
             echo "\n";
         });
 
         echo "</select>\n";
+        echo $this->showError();
         echo "</div>\n";
         echo "</div>\n";
+    }
+
+    public function showError()
+    {
+        if(isset($this->msgError)) {
+            return "<span class='label label-important'>{$this->msgError}</span>\n";
+        }
+
+        return "";
+    }
+
+    public function setMsgError($msgError)
+    {
+        $this->msgError = $msgError;
+    }
+
+    public function getMsgError()
+    {
+        return $this->msgError;
     }
 
     public function setId($id)
@@ -96,16 +121,6 @@ class Select extends FieldContainer
     public function getMultiple()
     {
         return $this->multiple;
-    }
-
-    public function setPlaceholder($placeholder)
-    {
-        $this->placeholder = $placeholder;
-    }
-
-    public function getPlaceholder()
-    {
-        return $this->placeholder;
     }
 
     public function setSize($size)

@@ -12,32 +12,20 @@ namespace FT\Formulario;
 class Form implements iField
 {
     protected $validator;
-    private $id;
-    private $name;
-    private $action;
-    private $method;
-    private $class;
-    private $fields  = []; //array de iField
+    protected $id;
+    protected $name;
+    protected $action;
+    protected $method;
+    protected $class;
+    protected $fields  = []; //array de iField
 
-    function __construct(Validator $validator, $id, $name, $action, $method, $class)
+    function __construct($id, $name, $action, $method, $class)
     {
-        $this->validator = $validator;
         $this->id = $id;
         $this->name = $name;
         $this->action = $action;
         $this->method = $method;
         $this->class = $class;
-    }
-
-
-    public function createField(iField $field)
-    {
-        $this->fields[] = $field;
-    }
-
-    public function resetField()
-    {
-        $this->fields = null;
     }
 
     public function render()
@@ -52,6 +40,26 @@ class Form implements iField
         );
 
         echo "</form>\n";
+    }
+
+    public function setValidator(Validator $validator)
+    {
+        $this->validator = $validator;
+    }
+
+    public function getValidator()
+    {
+        return $this->validator;
+    }
+
+    public function createField(iField $field)
+    {
+        $this->fields[] = $field;
+    }
+
+    public function resetField()
+    {
+        $this->fields = null;
     }
 
     public function setAction($action)

@@ -18,7 +18,7 @@ abstract class FieldContainer implements iField
         $this->fields[] = $field;
     }
 
-    public function resetFiedls()
+    public function resetFields()
     {
         $this->fields = null;
     }

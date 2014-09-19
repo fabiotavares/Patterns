@@ -8,25 +8,16 @@
 
 namespace FT\Formulario\Types;
 
-use FT\Formulario\iField;
+use FT\Formulario\AbstractField;
 
-class InputMark implements iField
+class InputMark extends AbstractField
 {
-    private $name;
-    private $id;
-    private $value;
-    private $type; //radio ou checkbox
-    private $legend;
     private $checked;
 
-    function __construct($type, $id, $name, $value, $legend, $checked = "")
+    function __construct($type, $id, $name, $legend, $checked = "")
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->value = $value;
-        $this->type = $type;
-        $this->legend = $legend;
         $this->checked = $checked;
+        parent::__construct($id, $name, $type, $legend);
     }
 
     public function render()
@@ -41,56 +32,6 @@ class InputMark implements iField
         echo "</div>\n";
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setLegend($legend)
-    {
-        $this->legend = $legend;
-    }
-
-    public function getLegend()
-    {
-        return $this->legend;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setValue($value)
-    {
-        $this->value = $value;
-    }
-
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    public function getType()
-    {
-        return $this->type;
-    }
-
     public function setChecked($checked)
     {
         $this->checked = $checked;
@@ -99,16 +40,6 @@ class InputMark implements iField
     public function getChecked()
     {
         return $this->checked;
-    }
-
-    public function setStr($legend)
-    {
-        $this->legend = $legend;
-    }
-
-    public function getStr()
-    {
-        return $this->legend;
     }
 
 } 
